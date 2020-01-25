@@ -2,7 +2,9 @@
 . .\action
 . .\folders
 
-$rules = Get-Content rules.order
+$global:message = $global:Inbox.Items[$args[0]]
+$logTarget = $logTarget + "." + $args[0]
+$rules = Get-Content ~\.email.rules.order
 
 function get-rule-path($rule) {
   return $global:rulesPath + $rule + ".ps1"
@@ -14,12 +16,10 @@ function process-message() {
 
   $processed = $false
   if ( $delete ) {
-    log "matched delete rule: $rule"
     Delete-Message $message $rule
 
     $processed = $true
   } elseif ( $matched ) {
-    log "matched move rule: $rule"
     Move-Message $message $rule
     $processed = $true
   }
@@ -34,7 +34,6 @@ function process-message() {
 $global:message = $global:Inbox.Items[$args[0]]
 foreach ( $global:rule in $rules ) {
   if ( $rule -eq $null -or $rule.length -eq 0 ) {
-    log "skipping empty rule"
     continue
   }
 

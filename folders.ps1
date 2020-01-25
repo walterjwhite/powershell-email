@@ -3,7 +3,7 @@ function Get-Target-Directory($rule) {
 
 	$targetDirectory = $Inbox
 	for($i = 0;$i -lt $elements.Count;$i++) {
-		$global:targetDirectory = $global:targetDirectory.Folders.Item($elements[$i])
+		$targetDirectory = $targetDirectory.Folders.Item($elements[$i])
 	}
 
 	#log "target folder: " $global:targetDirectory.FolderPath

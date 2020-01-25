@@ -10,9 +10,9 @@ $Inbox = $Account.Folders.Item("Inbox")
 
 if($debug) {
 	if($logTarget -match "Stdout") {
-		$logDirectory = Split-Path -Path $LogFile -Parent
-		if(!(test-path $LogDirectory)) {
-			New-Item -ItemType Directory -Force -Path $LogDirectory | Out-Null
+		$logDirectory = Split-Path -Path $logTarget -Parent
+		if(!(test-path $logDirectory)) {
+			New-Item -ItemType Directory -Force -Path $logDirectory | Out-Null
 		}
 	}
 }
@@ -22,7 +22,7 @@ function log($message) {
 		if($logTarget -match "Stdout") {
 			write-host $message
 		} else {
-			Add-Content $LogFile $message
+			Add-Content $logTarget $message
 		}
 	}
 }
